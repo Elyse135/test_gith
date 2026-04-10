@@ -1,0 +1,144 @@
+<?php
+session_start();
+$sessionTimeout = 3600;
+if (!isset($_SESSION['username']) || (isset($_SESSION['login_time']) && time() - $_SESSION['login_time'] > $sessionTimeout)) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
+$_SESSION['login_time'] = time();
+$username = htmlspecialchars($_SESSION['username']);
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mini projet web moderne pour présenter une idée, un produit ou un portfolio.">
+  <title>Pulse Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="public/assets/css/style.css">
+  <style>
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-badge {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">PA</span>
+      <div>
+        <p>Pulse Atelier</p>
+        <span>Mini projet web</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="user-badge">👤 <?= $username ?></span>
+      <a class="ghost-link" href="logout.php">Déconnexion</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Projet prêt pour Git</p>
+        <h1>Une landing page nette, expressive et simple à déployer.</h1>
+        <p class="lead">
+          Ce mini site présente une base propre pour un portfolio, une activité ou une démo produit.
+          Tout est en HTML, CSS et JavaScript léger, sans dépendance de build.
+        </p>
+        <div class="actions">
+          <a class="primary-btn" href="#features">Voir la structure</a>
+          <button class="secondary-btn" id="shuffleFacts" type="button">Changer les points forts</button>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Aperçu du projet">
+        <div class="panel-card panel-card--accent">
+          <span class="panel-label">Statut</span>
+          <strong>Prêt à publier</strong>
+          <p>Structure statique simple à héberger sur GitHub Pages ou n'importe quel serveur web.</p>
+        </div>
+        <div class="panel-grid">
+          <article class="panel-card">
+            <span class="panel-label">Stack</span>
+            <strong>HTML / CSS / JS</strong>
+          </article>
+          <article class="panel-card">
+            <span class="panel-label">Design</span>
+            <strong>Contraste fort</strong>
+          </article>
+        </div>
+      </aside>
+    </section>
+
+    <section class="metrics" aria-label="Indicateurs rapides">
+      <article>
+        <strong>3</strong>
+        <span>fichiers principaux</span>
+      </article>
+      <article>
+        <strong>0</strong>
+        <span>dépendance externe</span>
+      </article>
+      <article>
+        <strong>100%</strong>
+        <span>compatible GitHub Pages</span>
+      </article>
+    </section>
+
+    <section class="content" id="features">
+      <div class="section-heading">
+        <p class="eyebrow">Ce que contient le projet</p>
+        <h2>Une base claire pour aller vite sans sacrifier la présentation.</h2>
+      </div>
+
+      <div class="cards" id="factCards">
+        <article class="info-card">
+          <h3>Design éditorial</h3>
+          <p>Un fond texturé, des cartes contrastées et une hiérarchie typographique nette.</p>
+        </article>
+        <article class="info-card">
+          <h3>Navigation simple</h3>
+          <p>Des ancres directes et des boutons lisibles pour garder une expérience fluide.</p>
+        </article>
+        <article class="info-card">
+          <h3>Déploiement facile</h3>
+          <p>Le dossier <span>public</span> peut être servi tel quel par Git ou un hébergement statique.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="timeline" id="contact">
+      <div class="section-heading">
+        <p class="eyebrow">Déploiement</p>
+        <h2>Étapes recommandées pour publier ce mini projet.</h2>
+      </div>
+
+      <ol class="steps">
+        <li>Mettre le contenu dans un dépôt Git.</li>
+        <li>Activer GitHub Pages sur la racine du dépôt ou sur le dossier <span>public</span> selon votre configuration.</li>
+        <li>Partager l'URL générée avec la classe ou l'équipe.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Pulse Atelier</p>
+    <span id="year"></span>
+  </footer>
+
+  <script src="public/assets/js/main.js"></script>
+</body>
+</html>
